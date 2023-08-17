@@ -26,17 +26,7 @@ class Auth extends CI_Controller
 
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
-
-			$this->db->save_queries = TRUE;
-			$this->user_model->get_user_by_emailEXPLAIN($email);
-			$queries = $this->db->queries;
-			print_r($queries);
-
-			$this->db->save_queries = TRUE;
-			$this->user_model->get_user_by_emailSTATS($email);
-			$queries = $this->db->queries;
-			print_r($queries);
-			exit;
+			
 			$user = $this->user_model->get_user_by_email($email);
 			if ($user && password_verify($password, $user->password)) {
 				$user_data = array(
