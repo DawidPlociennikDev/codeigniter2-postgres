@@ -368,3 +368,5 @@ $config['proxy_ips'] = '';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
+
+$config['solr_server'] = 'http://solr:8983/solr';
