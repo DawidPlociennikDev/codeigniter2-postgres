@@ -32,3 +32,6 @@ Admin
 
 Adminer
 [http://localhost:8081](http://localhost:8081/?)
+
+SOLR
+[http://localhost:8983/solr](http://localhost:8983/solr)
