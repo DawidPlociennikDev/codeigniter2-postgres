@@ -18,6 +18,12 @@ Run docker containers
   docker-compose up
 ```
 
+Install composer dependencies
+
+```bash
+  docker-compose exec web composer install
+```
+
 Run migrations
 [http://localhost:8080/migrate](http://localhost:8080/migrate)
 
