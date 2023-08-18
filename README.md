@@ -1,9 +1,34 @@
-# CodeIgniter 2
-Open Source PHP Framework (originally from EllisLab)
+## Codeigniter 2 with PostgreSQL (PHP 7.4)
 
-For more info, please refer to the user-guide at http://www.codeigniter.com/userguide2/  
-(also available within the download package for offline use)
+Clone project
 
-**WARNING:** *CodeIgniter 2.x is no longer under development and only receives security patches until October 31st, 2015.
-Please update your installation to the latest CodeIgniter 3.x version available
-(upgrade instructions [here](http://www.codeigniter.com/userguide3/installation/upgrade_300.html)).*
+```bash
+  https://github.com/DawidPlociennikDev/codeigniter2-postgres.git
+```
+
+Build docker
+
+```bash
+  docker-compose build
+```
+
+Run docker containers
+
+```bash
+  docker-compose up
+```
+
+Run migrations
+[http://localhost:8080/migrate](http://localhost:8080/migrate)
+
+Seed database
+[http://localhost:8080/migrate/seed](http://localhost:8080/migrate/seed)
+
+Project
+[http://localhost:8080](http://localhost:8080)
+
+Admin
+[http://localhost:8080/logowanie](http://localhost:8080/logowanie)
+
+Adminer
+[http://localhost:8081](http://localhost:8081/?)
