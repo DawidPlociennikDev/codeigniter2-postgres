@@ -1,5 +1,10 @@
 version: '3'
+
+networks:
+  project:
+
 services:
+
   web:
     build:
       context: .
@@ -10,14 +15,30 @@ services:
       - .:/var/www/html
     depends_on:
       - db
+    networks:
+      - project
+      
   db:
     image: postgres
     environment:
       POSTGRES_USER: postgres_user
       POSTGRES_PASSWORD: zasxcd
       POSTGRES_DB: codeigniter2
+    networks:
+      - project
+
   adminer:
     image: adminer
     restart: always
     ports:
       - 8081:8080
+    networks:
+      - project
+
+  solr:
+    image: solr:latest
+    container_name: solr
+    ports:
+      - "8983:8983"
+    networks:
+      - project
