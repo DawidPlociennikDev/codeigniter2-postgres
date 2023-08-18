@@ -114,3 +114,6 @@ $autoload['model'] = array();
 
 /* End of file autoload.php */
 /* Location: ./application/config/autoload.php */
+
+$config['composer_autoload'] = TRUE;
+require_once 'vendor/autoload.php';
