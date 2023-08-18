@@ -24,10 +24,10 @@ class User_model extends CI_Model
         return $query->row();
     }
 
-    public function insert_user(array $data) : int
+    public function insert_user(array $data)
     {
         $this->db->insert('users', $data);
-        return $this->db->insert_id();
+        return (int) $this->db->insert_id();
     }
 
     public function get_user_comments(int $id) : object

@@ -21,6 +21,11 @@
                         </a>
                         <h3>Sign Up</h3>
                     </div>
+                    <?php if ($this->session->flashdata('message')) : ?>
+                        <div class="alert <?= $this->session->flashdata('alert_type'); ?>">
+                            <?= $this->session->flashdata('message'); ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="form-floating mb-3">
                         <input name="first_name" type="text" class="form-control" id="floatingText" placeholder="name" value="<?= set_value('first_name'); ?>">
                         <label for="floatingText">First name</label>

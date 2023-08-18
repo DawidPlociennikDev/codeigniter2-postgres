@@ -14,22 +14,26 @@ class Migrate extends CI_Controller
 
     public function seed()
     {
-        $hashed_password = password_hash('zasxcd', PASSWORD_BCRYPT);
+        if ($this->resetTables()) {
+            $hashed_password = password_hash('zasxcd', PASSWORD_BCRYPT);
 
-        $userData = ['Dawid', 'Płóciennik', 'dawid.plociennik13@gmail.com', $hashed_password];
-        $user_id = $this->fillUsersDatabase(...$userData);
-        $this->fillCommentsDatabase($user_id);
+            $userData = ['Dawid', 'Płóciennik', 'dawid.plociennik13@gmail.com', $hashed_password];
+            $user_id = $this->fillUsersDatabase(...$userData);
+            $this->fillCommentsDatabase($user_id);
 
-        $hashed_password = password_hash('johnDoe', PASSWORD_BCRYPT);
+            $hashed_password = password_hash('johnDoe', PASSWORD_BCRYPT);
 
-        $userData = ['John', 'Doe', 'j.doe@gmail.com', $hashed_password];
-        $user_id = $this->fillUsersDatabase(...$userData);
-        $this->fillCommentsDatabase($user_id);
+            $userData = ['John', 'Doe', 'j.doe@gmail.com', $hashed_password];
+            $user_id = $this->fillUsersDatabase(...$userData);
+            $this->fillCommentsDatabase($user_id);
+
+            echo 'done';
+        }
     }
 
     private function fillUsersDatabase(string $first_name, string $last_name, string $email, string $password): int
     {
-		$this->load->model('user_model');
+        $this->load->model('user_model');
 
         $data = array(
             'first_name' => $first_name,
@@ -38,7 +42,7 @@ class Migrate extends CI_Controller
             'password' => $password,
         );
 
-        return $this->user_model->insert_user($data);
+        return @$this->user_model->insert_user($data);
     }
 
     private function fillCommentsDatabase(int $user_id): void
@@ -56,5 +60,23 @@ class Migrate extends CI_Controller
         }
 
         $this->db->insert_batch('comments', $data);
+    }
+
+    private function resetTables(): bool
+    {
+        $this->db->trans_begin();
+        $query1 = "SELECT setval('users_id_seq', 1, false);";
+        $query2 = "SELECT setval('comments_id_seq', 1, false);";
+        $this->db->empty_table('users');
+        $this->db->query($query1);
+        $this->db->query($query2);
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return false;
+        } else {
+            $this->db->trans_commit();
+            return true;
+        }
     }
 }
