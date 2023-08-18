@@ -37,6 +37,7 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 define('ASSET_URL',                             '/assets/front/');
 define('ASSET_BACK_URL',                        '/assets/back/');
+define('LOG_LEVEL_DATABASE',                    4);
 
 
 /* End of file constants.php */
