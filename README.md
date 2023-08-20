@@ -62,6 +62,7 @@ Init GrumPHP before commit
   ./vendor/bin/grumphp git:init
 ```
 
+## REST API
 
 GET ALL COMMENTS
 [http://localhost:8080/migrate](http://localhost:8080/api/get)
