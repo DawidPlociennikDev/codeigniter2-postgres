@@ -49,3 +49,16 @@ Run PHPStan
 ```bash
   vendor/bin/phpstan analyse -c phpstan.neon
 ```
+
+Run PHPStan
+
+```bash
+  phpcs application
+```
+
+Init GrumPHP before commit
+
+```bash
+  ./vendor/bin/grumphp git:init
+```
+
