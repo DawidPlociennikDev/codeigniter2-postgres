@@ -29,12 +29,12 @@
                     <div class="form-floating mb-3">
                         <input name="email" type="email" class="form-control" id="floatingInput" placeholder="Email">
                         <label for="floatingInput">Email address</label>
-                        <div class="invalid-feedback"><?php echo form_error('email'); ?></div>
+                        <div class="invalid-feedback"><?= form_error('email'); ?></div>
                     </div>
                     <div class="form-floating mb-4">
                         <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
                         <label for="floatingPassword">Password</label>
-                        <div class="invalid-feedback"><?php echo form_error('password'); ?></div>
+                        <div class="invalid-feedback"><?= form_error('password'); ?></div>
                     </div>
                     <div class="d-flex align-items-center justify-content-end mb-4">
                         <a href="">Forgot Password</a>
