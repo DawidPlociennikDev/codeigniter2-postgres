@@ -48,8 +48,11 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'db';
-$db['default']['username'] = 'postgres_user';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'postgres';
+// for docker
+// $db['default']['hostname'] = 'db';
+// $db['default']['username'] = 'postgres_user';
 $db['default']['password'] = 'zasxcd';
 $db['default']['database'] = 'codeigniter2';
 $db['default']['dbdriver'] = 'postgre';

@@ -1,8 +1,14 @@
 <?php
+
+require 'application/models/traits/slug_trait.php';
+use Models\Traits\SlugTrait;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class User_model extends CI_Model
 {
+    use SlugTrait;
+
     public function custom_query(string $email) : object
     {
         $query = $this->db->query('EXPLAIN SELECT * FROM users');
@@ -26,6 +32,7 @@ class User_model extends CI_Model
 
     public function insert_user(array $data)
     {
+        $data['slug'] = User_model::slugName($data['first_name']. ' ' . $data['last_name']);
         $this->db->insert('users', $data);
         return (int) $this->db->insert_id();
     }

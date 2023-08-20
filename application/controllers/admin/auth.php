@@ -73,7 +73,7 @@ class Auth extends CI_Controller
 				'password' => $hashed_password,
 			);
 
-			if ($this->db->insert('users', $data)) {
+			if ($this->user_model->insert_user($data)) {
 				$this->session->set_flashdata('alert_type', 'alert-success');
 				$this->session->set_flashdata('message', 'Registration has been successful. You can now log in!');
 				redirect('/logowanie');
