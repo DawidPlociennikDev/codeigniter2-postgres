@@ -47,5 +47,5 @@ SOLR
 Run PHPStan
 
 ```bash
-  vendor/bin/phpstan analyse application
+  vendor/bin/phpstan analyse -c phpstan.neon
 ```
