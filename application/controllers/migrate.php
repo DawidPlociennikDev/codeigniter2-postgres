@@ -18,14 +18,14 @@ class Migrate extends CI_Controller
             $hashed_password = password_hash('zasxcd', PASSWORD_BCRYPT);
 
             $userData = ['Dawid', 'Płóciennik', 'dawid.plociennik13@gmail.com', $hashed_password];
-            $user_id = $this->fillUsersDatabase(...$userData);
-            $this->fillCommentsDatabase($user_id);
+            $userId = $this->fillUsersDatabase(...$userData);
+            $this->fillCommentsDatabase($userId);
 
             $hashed_password = password_hash('johnDoe', PASSWORD_BCRYPT);
 
             $userData = ['John', 'Doe', 'j.doe@gmail.com', $hashed_password];
-            $user_id = $this->fillUsersDatabase(...$userData);
-            $this->fillCommentsDatabase($user_id);
+            $userId = $this->fillUsersDatabase(...$userData);
+            $this->fillCommentsDatabase($userId);
 
             echo 'done';
         }
@@ -45,7 +45,7 @@ class Migrate extends CI_Controller
         return @$this->user_model->insertUser($data);
     }
 
-    private function fillCommentsDatabase(int $user_id): void
+    private function fillCommentsDatabase(int $userId): void
     {
         $data = array();
         for ($i = 0; $i < 10000; $i++) {
@@ -54,7 +54,7 @@ class Migrate extends CI_Controller
             $randomString = bin2hex($randomBytes);
 
             $data[] = array(
-                'user_id' => $user_id,
+                'user_id' => $userId,
                 'comment' => $randomString
             );
         }

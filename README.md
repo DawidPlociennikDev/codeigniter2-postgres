@@ -62,3 +62,21 @@ Init GrumPHP before commit
   ./vendor/bin/grumphp git:init
 ```
 
+
+GET ALL COMMENTS
+[http://localhost:8080/migrate](http://localhost:8080/api/get)
+
+GET ONE COMMENT BY ID
+[http://localhost:8080/migrate](http://localhost:8080/api/get/{$id})
+
+PUT COMMENT
+[http://localhost:8080/migrate](http://localhost:8080/api/put/{$id})
+
+PATCH COMMENT
+[http://localhost:8080/migrate](http://localhost:8080/api/patch/{$id})
+
+POST COMMENT
+[http://localhost:8080/migrate](http://localhost:8080/api/post)
+
+DELETE COMMENT
+[http://localhost:8080/api/delete/{$id}](http://localhost:8080/api/delete/{$id})
