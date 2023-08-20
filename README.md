@@ -41,3 +41,24 @@ Adminer
 
 SOLR
 [http://localhost:8983/solr](http://localhost:8983/solr)
+
+
+
+Run PHPStan
+
+```bash
+  vendor/bin/phpstan analyse -c phpstan.neon
+```
+
+Run PHPStan
+
+```bash
+  phpcs application
+```
+
+Init GrumPHP before commit
+
+```bash
+  ./vendor/bin/grumphp git:init
+```
+

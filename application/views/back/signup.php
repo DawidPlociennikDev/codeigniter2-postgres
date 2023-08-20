@@ -29,22 +29,22 @@
                     <div class="form-floating mb-3">
                         <input name="first_name" type="text" class="form-control" id="floatingText" placeholder="name" value="<?= set_value('first_name'); ?>">
                         <label for="floatingText">First name</label>
-                        <div class="invalid-feedback"><?php echo form_error('first_name'); ?></div>
+                        <div class="invalid-feedback"><?= form_error('first_name'); ?></div>
                     </div>
                     <div class="form-floating mb-3">
                         <input name="last_name" type="text" class="form-control" id="floatingText" placeholder="last name" value="<?= set_value('last_name'); ?>">
                         <label for="floatingText">Last name</label>
-                        <div class="invalid-feedback"><?php echo form_error('last_name'); ?></div>
+                        <div class="invalid-feedback"><?= form_error('last_name'); ?></div>
                     </div>
                     <div class="form-floating mb-3">
                         <input name="email" type="email" class="form-control" id="floatingInput" placeholder="email" value="<?= set_value('email'); ?>">
                         <label for="floatingInput">Email address</label>
-                        <div class="invalid-feedback"><?php echo form_error('email'); ?></div>
+                        <div class="invalid-feedback"><?= form_error('email'); ?></div>
                     </div>
                     <div class="form-floating mb-4">
                         <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="password">
                         <label for="floatingPassword">Password</label>
-                        <div class="invalid-feedback"><?php echo form_error('password'); ?></div>
+                        <div class="invalid-feedback"><?= form_error('password'); ?></div>
                     </div>
                     <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
                     <p class="text-center mb-0">Already have an Account? <a href="<?= base_url('logowanie') ?>">Sign In</a></p>
