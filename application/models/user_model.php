@@ -9,37 +9,43 @@ class User_model extends CI_Model
 {
     use SlugTrait;
 
-    public function custom_query(string $email) : object
+    public function customQuery(string $email)
     {
         $query = $this->db->query('EXPLAIN SELECT * FROM users');
         print_r($query->row());exit;
         return $query->row();
     }
 
-    public function get_user_by_email(string $email) : object
+    public function getUserByEmail(string $email)
     {
-		log_message('error', json_encode($this->user_model->get_user_by_email_with_EXPLAIN($email)));
+		log_message('error', json_encode($this->user_model->getUserByEmailWithEXPLAIN($email)));
         $this->db->where('email', $email);
         $query = $this->db->get('users');
         return $query->row();
     }
 
-    public function get_user_by_email_with_EXPLAIN(string $email) : object
+    public function getUserByEmailWithEXPLAIN(string $email)
     {
         $query = $query = $this->db->query("EXPLAIN ANALYZE VERBOSE SELECT * FROM users WHERE email = '{$email}'");
         return $query->row();
     }
 
-    public function insert_user(array $data)
+    public function insertUser(array $data): int
     {
         $data['slug'] = User_model::slugName($data['first_name']. ' ' . $data['last_name']);
         $this->db->insert('users', $data);
         return (int) $this->db->insert_id();
     }
 
-    public function get_user_comments(int $id) : object
+    public function updateUserLoginDate(int $user_id) : void
     {
-		log_message('error', json_encode($this->user_model->get_user_comments_with_EXPLAIN($id)));
+        $this->db->where('id', $user_id);
+        $this->db->update('users', ['login_at' => date('Y-m-d H:i:s')]);
+    }
+
+    public function getUserComments(int $id)
+    {
+		log_message('error', json_encode($this->user_model->getUserCommentsWithEXPLAIN($id)));
         $query = $query = $this->db->query("SELECT users.*, comments.*
             FROM users
             LEFT JOIN comments ON users.id = comments.user_id
@@ -47,7 +53,7 @@ class User_model extends CI_Model
         return $query->row();
     }
 
-    public function get_user_comments_with_EXPLAIN(int $id) : object
+    public function getUserCommentsWithEXPLAIN(int $id)
     {
         $query = $query = $this->db->query("EXPLAIN ANALYZE VERBOSE 
             SELECT users.*, comments.*

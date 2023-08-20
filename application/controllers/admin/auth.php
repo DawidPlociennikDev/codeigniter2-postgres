@@ -27,7 +27,7 @@ class Auth extends CI_Controller
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
 
-			$user = $this->user_model->get_user_by_email($email);
+			$user = $this->user_model->getUserByEmail($email);
 
 			if ($user && password_verify($password, $user->password)) {
 				$user_data = array(
@@ -38,6 +38,8 @@ class Auth extends CI_Controller
 					'logged_in' => TRUE
 				);
 				$this->session->set_userdata($user_data);
+				$this->user_model->updateUserLoginDate($user->id);
+				
 				redirect('dashboard');
 			}
 			$this->session->set_flashdata('alert_type', 'alert-danger');
@@ -73,7 +75,7 @@ class Auth extends CI_Controller
 				'password' => $hashed_password,
 			);
 
-			if ($this->user_model->insert_user($data)) {
+			if ($this->user_model->insertUser($data)) {
 				$this->session->set_flashdata('alert_type', 'alert-success');
 				$this->session->set_flashdata('message', 'Registration has been successful. You can now log in!');
 				redirect('/logowanie');

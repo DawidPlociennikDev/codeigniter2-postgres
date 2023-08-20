@@ -42,7 +42,7 @@ class Migrate extends CI_Controller
             'password' => $password,
         );
 
-        return @$this->user_model->insert_user($data);
+        return @$this->user_model->insertUser($data);
     }
 
     private function fillCommentsDatabase(int $user_id): void
