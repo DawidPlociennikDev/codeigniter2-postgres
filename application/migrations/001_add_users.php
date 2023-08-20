@@ -33,7 +33,12 @@ class Migration_Add_users extends CI_Migration {
 			'login_at' => array(
 				'type' => 'TIMESTAMP',
 				'NULL' => TRUE
-			)
+			),
+			'slug' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '128',
+				'NULL' => TRUE
+			),
 		));
 
         $this->dbforge->add_key('id', TRUE);
