@@ -37,10 +37,11 @@ class User_model extends CI_Model
         return (int) $this->db->insert_id();
     }
 
-    public function updateUserLoginDate(int $user_id) : void
+    public function updateUserLoginDate(int $userId)
     {
-        $this->db->where('id', $user_id);
-        $this->db->update('users', ['login_at' => date('Y-m-d H:i:s')]);
+        $this->db->where('id', $userId);
+        $query = $this->db->update('users', ['login_at' => date('Y-m-d H:i:s')]);
+        return $query;
     }
 
     public function getUserComments(int $id)

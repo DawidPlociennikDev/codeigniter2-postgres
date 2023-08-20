@@ -38,6 +38,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 define('ASSET_URL',                             '/assets/front/');
 define('ASSET_BACK_URL',                        '/assets/back/');
 define('LOG_LEVEL_DATABASE',                    4);
+define('BEARER_TOKEN',                          'Bearer cN87xmIMRRxbUkV4q34KWbGRlMZz0fKnCJtw264J');
 
 
 /* End of file constants.php */

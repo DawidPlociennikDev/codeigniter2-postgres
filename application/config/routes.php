@@ -47,6 +47,12 @@ $route['wyloguj'] = 'admin/auth/logout';
 $route['dashboard'] = 'admin/dashboard/index';
 $route['page-not-found'] = 'custom404';
 
+$route['api/get'] = 'api/restapi/get';
+$route['api/get/(:num)'] = 'api/restapi/getById/$1';
+$route['api/put/(:num)'] = 'api/restapi/put/$1';
+$route['api/patch/(:num)'] = 'api/restapi/patch/$1';
+$route['api/post'] = 'api/restapi/post';
+$route['api/delete/(:num)'] = 'api/restapi/delete/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
