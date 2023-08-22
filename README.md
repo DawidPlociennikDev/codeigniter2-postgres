@@ -50,7 +50,7 @@ Run PHPStan
   vendor/bin/phpstan analyse -c phpstan.neon
 ```
 
-Run PHPStan
+Run PHPCS
 
 ```bash
   phpcs application
@@ -81,3 +81,20 @@ POST COMMENT
 
 DELETE COMMENT
 [http://localhost:8080/api/delete/{$id}](http://localhost:8080/api/delete/{$id})
+
+## Apache SOLR
+
+Install on Ubuntu 22.04
+[https://solr.apache.org/guide/solr/latest/deployment-guide/installing-solr.html](https://solr.apache.org/guide/solr/latest/deployment-guide/installing-solr.html)
+
+Create Index
+
+```bash
+  bin/solr create_core -c films
+```
+
+Delete Index
+
+```bash
+  bin/solr delete -c films
+```

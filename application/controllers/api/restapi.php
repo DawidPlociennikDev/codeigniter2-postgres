@@ -131,7 +131,6 @@ class RestApi extends CI_Controller
 
 	private function getArrayFromPatchData(string $patchData): array
 	{
-
 		$parameters = explode("&", $patchData);
 		$array = array();
 		foreach ($parameters as $param) {
