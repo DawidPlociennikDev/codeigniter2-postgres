@@ -1,7 +1,7 @@
 <?php
 
-require 'application/models/traits/slug_trait.php';
-use Models\Traits\SlugTrait;
+require_once 'application/traits/slug_trait.php';
+use Traits\SlugTrait;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 

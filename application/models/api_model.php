@@ -27,7 +27,7 @@ class Api_model extends CI_Model
     public function createComment(array $data)
     {
         $query = $this->db->insert('comments', $data);
-        return $query;
+        return $this->db->insert_id();
     }
 
     public function deleteComment(int $commentId)
