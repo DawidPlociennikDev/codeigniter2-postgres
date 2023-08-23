@@ -1,71 +1,5 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="icon" href="images/favicon.png" type="image/gif" />
-
-  <title>Shapel</title>
-
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet" />
-
-  <!-- font awesome style -->
-  <link href="css/font-awesome.min.css" rel="stylesheet" />
-  <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
-
-</head>
-
-<body>
-
-  <!-- header section strats -->
-  <header class="header_section innerpage_header">
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand-lg custom_nav-container">
-        <a class="navbar-brand" href="index.html">
-          <span>
-            Shapel
-          </span>
-        </a>
-        <div class="" id="">
-
-          <div class="custom_menu-btn">
-            <button onclick="openNav()">
-              <span class="s-1"> </span>
-              <span class="s-2"> </span>
-              <span class="s-3"> </span>
-            </button>
-            <div id="myNav" class="overlay">
-              <div class="overlay-content">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="gallery.html">Gallery</a>
-                <a href="service.html">Service</a>
-                <a href="blog.html">Blog</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
-  <!-- end header section -->
-
-  <!-- service section -->
+<?php $this->view('front/blocks/head.php'); ?>
+<?php $this->view('front/blocks/header.php'); ?>
 
   <section class="service_section layout_padding">
     <div class="container">
@@ -78,7 +12,7 @@
         <div class="col-md-6 col-lg-4 mx-auto">
           <div class="box">
             <div class="img-box">
-              <img src="images/s1.jpg" alt="">
+              <img src="<?= ASSET_URL ?>images/s1.jpg" alt="">
             </div>
             <div class="detail-box">
               <h5>
@@ -96,7 +30,7 @@
         <div class="col-md-6 col-lg-4 mx-auto">
           <div class="box">
             <div class="img-box">
-              <img src="images/s2.jpg" alt="">
+              <img src="<?= ASSET_URL ?>images/s2.jpg" alt="">
             </div>
             <div class="detail-box">
               <h5>
@@ -114,7 +48,7 @@
         <div class="col-md-6 col-lg-4 mx-auto">
           <div class="box">
             <div class="img-box">
-              <img src="images/s3.jpg" alt="">
+              <img src="<?= ASSET_URL ?>images/s3.jpg" alt="">
             </div>
             <div class="detail-box">
               <h5>
@@ -211,29 +145,4 @@
       </div>
     </div>
   </section>
-
-  <!-- end info_section -->
-
-
-  <!-- footer section -->
-  <footer class="footer_section">
-    <div class="container">
-      <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">Free Html Templates</a>
-      </p>
-    </div>
-  </footer>
-  <!-- footer section -->
-
-
-  <!-- jQery -->
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <!-- bootstrap js -->
-  <script src="js/bootstrap.js"></script>
-  <!-- custom js -->
-  <script src="js/custom.js"></script>
-
-</body>
-
-</html>
+<?php $this->view('front/blocks/footer.php'); ?>
