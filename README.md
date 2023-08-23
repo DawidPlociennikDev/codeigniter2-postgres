@@ -50,10 +50,10 @@ Run PHPStan
   vendor/bin/phpstan analyse -c phpstan.neon
 ```
 
-Run PHPCS
+Run GrumPHP
 
 ```bash
-  phpcs application
+  ./vendor/bin/grumphp run  
 ```
 
 Init GrumPHP before commit
@@ -97,4 +97,13 @@ Delete Index
 
 ```bash
   bin/solr delete -c films
+```
+
+
+## PHPUnit
+
+Run tests
+
+```bash
+  vendor/bin/phpunit                                      
 ```
