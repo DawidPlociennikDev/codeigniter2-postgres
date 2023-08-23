@@ -54,5 +54,7 @@ $route['api/patch/(:num)'] = 'api/restapi/patch/$1';
 $route['api/post'] = 'api/restapi/post';
 $route['api/delete/(:num)'] = 'api/restapi/delete/$1';
 
+$route['solr'] = 'solr/index';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

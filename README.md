@@ -91,7 +91,7 @@ Run tests
   vendor/bin/phpunit                                      
 ```
 
-## Apache SOLR
+## Apache SOLR - course
 
 Install on Ubuntu 22.04
 [https://solr.apache.org/guide/solr/latest/deployment-guide/installing-solr.html](https://solr.apache.org/guide/solr/latest/deployment-guide/installing-solr.html)
@@ -107,6 +107,84 @@ Create a solr core with default configs
 ```bash
    curl -X GET 'http://localhost:8983/solr/admin/cores?action=create&name={core_name}&instanceDir=configsets/{core_name}'
 ```
+
+
+### Schemaless mode
+
+```bash
+  cd $solr_home
+
+  cd server/solr/configsets
+  mkdir search_twitter
+  cp -r _default/. search_twitter
+```
+
+Create a solr core with default configs
+
+```bash
+  curl -X GET 'http://localhost:8983/solr/admin/cores?action=CREATE&name=search_twitter&instanceDir=configsets/search_twitter'
+```
+
+Get current schema fields
+
+```bash
+  curl -X GET "http://localhost:8983/solr/search_twitter/schema/fields"
+```
+
+Add document to solr
+
+```bash
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update' --data-binary '
+  {
+    "add": {
+      "doc": {
+          "content":"Late night with Solr 8.5",
+          "likes":10
+    }
+    }
+  }'
+```
+
+
+Get current schema fields
+
+```bash
+  curl -X GET "http://localhost:8983/solr/search_twitter/schema/fields"
+```
+
+Delete a collection
+
+```bash
+  curl -X GET 'http://localhost:8983/solr/admin/cores?action=UNLOAD&core=search_twitter&deleteInstanceDir=true&deleteDataDir=true'
+```
+
+
+### Schema API
+
+Add a new field in solr, explicitly
+--data-binary - This posts data exactly as specified with no extra processing whatsoever.
+
+```bash
+    curl -X POST -H 'Content-type:application/json' --data-binary '{
+      "add-field":{
+        "name":"updated_on",
+        "type":"pdate",
+        "indexed":true }
+    }' http://localhost:8983/api/cores/search_twitter/schema
+```
+
+Replace a field 
+
+```bash
+  curl -X POST -H 'Content-type:application/json' --data-binary '{
+    "replace-field":{
+      "name":"updated_on",
+      "type":"plong",
+      "indexed":false }
+  }' http://localhost:8983/api/cores/search_twitter/schema
+```
+
+### Document Identification
 
 Get current schema fields
 
@@ -201,31 +279,32 @@ Realod a collection
   curl -X GET "http://localhost:8983/solr/admin/cores?action=RELOAD&core={core_name}"
 ```
 
-## Apache SOLR - course
+
+### Indexed fields
 
 Replace definition of a field 
 
 ```bash
-curl -X POST -H 'Content-type:application/json' --data-binary '{
-  "replace-field":{
-     "name":"updated_on",
-     "type":"pdate",
-     "indexed":true }
-}' http://localhost:8983/api/cores/search_twitter/schema
+  curl -X POST -H 'Content-type:application/json' --data-binary '{
+    "replace-field":{
+      "name":"updated_on",
+      "type":"pdate",
+      "indexed":true }
+  }' http://localhost:8983/api/cores/search_twitter/schema
 ```
 
 Add document to solr
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
-{
-  "add": {
-    "doc": {
-        "twitter_id":"2",
-        "updated_on":"2020-04-13T15:26:37Z"
-	}
-  }
-}'
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
+  {
+    "add": {
+      "doc": {
+          "twitter_id":"2",
+          "updated_on":"2020-04-13T15:26:37Z"
+    }
+    }
+  }'
 ```
 
 Get documents which were updated after date
@@ -269,6 +348,8 @@ Get all documents from the index
 ```bash
   curl -X GET "http://localhost:8983/solr/search_twitter/select?q=*:*"
 ```
+
+### Stored fields
 
 Add a new field which is not searchable
 
@@ -335,6 +416,8 @@ Add document to solr
   curl -X GET "http://localhost:8983/solr/search_twitter/select?q=likes_count:10"
 ```
 
+### MultiValue Fields
+
 Add a multiValue field
 
 ```bash
@@ -366,6 +449,9 @@ Add a document with a multiValue field
 ```bash
   curl -X GET "http://localhost:8983/solr/search_twitter/select?q=links:solr"  
 ```
+
+
+### Dynamic fields
 
 Add dynamic field <dynamicField name="*_string" type="string" indexed="true" stored="true" />
 
@@ -426,6 +512,8 @@ Add dynamic field <dynamicField name="*_string" type="string" indexed="true" sto
 ```bash
   curl -X GET "http://localhost:8983/solr/search_twitter/select?q=link_texts:solr"
 ```
+
+### Copy files
 
 Add catch_all field <field name="catch_all" type="text_en" indexed="true" stored="false" multiValued="true"/>
 
@@ -491,6 +579,7 @@ Add catch_all field <field name="catch_all" type="text_en" indexed="true" stored
   curl -X GET "http://localhost:8983/solr/search_twitter/select?q=happy&df=catch_all"
 ```
 
+### Update handler
 
 ```bash
   curl -X GET "http://localhost:8983/solr/search_twitter/select?q=*:*"
@@ -575,75 +664,220 @@ Delete documents by query
     "delete": {"query": "user_name_string:Solr"}
   }'
 ```
+### Atomic Updates
 
 Add a document
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
-{
-	 "add": {
-	    "doc": {
-	        "twitter_id" : "2",
-	        "user_name_string" : "Solr",
-	        "type_string" : "post",
-	        "lang_string" : "en",
-	        "updated_on_pdt" : "2019-12-30T09:30:22Z",
-	        "likes_count_pint" : 10,
-	        "text_en" : "Happy Searching!",
-	        "subject_strings":"index",
-	        "link_strings" : ["https://github.com/apache/lucene-solr",
-	                    "https://lucene.apache.org/solr/"]
-	    }
-	}
-}'
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
+  {
+    "add": {
+        "doc": {
+            "twitter_id" : "2",
+            "user_name_string" : "Solr",
+            "type_string" : "post",
+            "lang_string" : "en",
+            "updated_on_pdt" : "2019-12-30T09:30:22Z",
+            "likes_count_pint" : 10,
+            "text_en" : "Happy Searching!",
+            "subject_strings":"index",
+            "link_strings" : ["https://github.com/apache/lucene-solr",
+                        "https://lucene.apache.org/solr/"]
+        }
+    }
+  }'
 ```
 
 Update a document
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
-[{
-    "twitter_id" : "2",	    
-    "likes_count_pint" : {"set":11}	      
-}]'
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
+  [{
+      "twitter_id" : "2",	    
+      "likes_count_pint" : {"set":11}	      
+  }]'
 ```
 
 ```bash
-curl -X GET "http://localhost:8983/solr/search_twitter/select?q=*:*"
+  curl -X GET "http://localhost:8983/solr/search_twitter/select?q=*:*"
 ```
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
-[{
-    "twitter_id" : "2",	  
-    "likes_count_pint" : {"inc":1},  
-    "subject_strings":{"add":["searching","database"]},
-    "link_strings":{"remove":"https://github.com/apache/lucene-solr"}        
-}]'
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
+  [{
+      "twitter_id" : "2",	  
+      "likes_count_pint" : {"inc":1},  
+      "subject_strings":{"add":["searching","database"]},
+      "link_strings":{"remove":"https://github.com/apache/lucene-solr"}        
+  }]'
 ```
 
 ```bash
-curl -X GET "http://localhost:8983/solr/search_twitter/select?q=*:*"
+  curl -X GET "http://localhost:8983/solr/search_twitter/select?q=*:*"
 ```
 
 Get the version of a document using the get request handler
 
 ```bash
-curl -X GET -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/get?id=2&fl=id,_version_'
+  curl -X GET -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/get?id=2&fl=id,_version_'
 ```
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
-[{
-    "twitter_id" : "2",	    
-    "likes_count_pint" : {"set":13}
-}]'
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
+  [{
+      "twitter_id" : "2",	    
+      "likes_count_pint" : {"set":13}
+  }]'
 ```
 
 Add 2 docs that will return the version
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?versions=true&omitHeader=true' --data-binary '
-[ { "twitter_id" : "3" },
-  { "twitter_id" : "4" } ]'
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?versions=true&omitHeader=true' --data-binary '
+  [ { "twitter_id" : "3" },
+    { "twitter_id" : "4" } ]'
+```
+
+### Nested documents
+
+```bash
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
+  { 
+          "delete": {"query": "*:*"}
+  }'                                                    
+```
+
+Add nested documents
+
+```bash
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
+  [{
+      "twitter_id": "5",
+      "title_txt": "New Lucene and Solr release is out",
+      "type_string": "post",
+      "_childDocuments_": [
+        {
+          "twitter_id": "6",
+          "type_string": "comment",
+          "content_txt": "Lots of new features"
+        }
+      ]
+    },
+    {
+      "twitter_id": "7",
+      "title_txt": "Solr adds join support",
+      "type_string": "post",
+      "comments_string": [{
+          "twitter_id": "8",
+          "type_string": "comment",
+          "content_txt": "SolrCloud supports it too!"
+        },
+        {
+          "twitter_id": "9",
+          "type_string": "comment",
+          "content_txt": "New filter syntax"
+        }
+      ]
+    }
+  ]'
+```
+
+```bash
+  curl -X GET http://localhost:8983/solr/search_twitter/query -d 'q={!child of="type_string:post"}title_txt:"Lucene"'
+```
+
+```bash
+  curl -X GET "http://localhost:8983/solr/search_twitter/select?q=*:*"
+```
+
+Delete document chidlren ..nothing happens
+
+```bash
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
+  {
+    "delete": ["8","9"]
+  }'
+```
+
+### Reindexing
+
+```bash
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
+  {
+    "add": {
+      "doc": {
+          "twitter_id":"1",
+          "content":"Late night with Solr 8.5",
+          "seen_i":8000
+    }
+    }
+  }'
+```
+
+```bash
+  curl -X GET "http://localhost:8983/solr/search_twitter/select?q=*:*"
+```
+
+```bash
+  curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/search_twitter/update?commitWithin=100' --data-binary '
+  {
+    "add": {
+      "doc": {
+          "twitter_id":"1",
+          "content":"Late night with Solr 8.5",
+          "seen_i":2147483649
+    }
+    }
+  }'
+```
+
+```bash
+  curl -X GET "http://localhost:8983/solr/search_twitter/select?q=*:*"
+```
+
+```bash
+  cd $SOLR_HOME
+  cd server/solr/configsets
+  mkdir search_twitter_clone
+  cp -r search_twitter/conf/. search_twitter_clone/conf
+```
+
+Create solr core with default configs
+
+```bash
+  curl -X GET 'http://localhost:8983/solr/admin/cores?action=CREATE&name=search_twitter_clone&instanceDir=configsets/search_twitter_clone'
+```
+
+```bash
+  curl -X GET 'http://localhost:8983/solr/admin/cores?action=SWAP&core=search_twitter&other=search_twitter_clone'
+```
+
+### Faceting search
+
+```bash
+curl -X GET "http://localhost:8983/solr/tech_products/select?q=memory"
+```
+
+```bash
+curl -X GET "http://localhost:8983/solr/tech_products/select?q=memory&facet=true&facet.field=manu"
+```
+
+```bash
+curl -X GET "http://localhost:8983/solr/tech_products/select?q=memory&facet=true&facet.field=manu&facet.field=popularity"
+```
+
+```bash
+curl -X GET "http://localhost:8983/solr/tech_products/select?q=memory&facet=true&facet.field=price"
+```
+
+```bash
+curl -X GET "http://localhost:8983/solr/tech_products/select?q=memory&facet=true&facet.field=manu&facet.range=price&f.price.facet.range.start=0&f.price.facet.range.end=500&f.price.facet.range.gap=100"
+```
+
+```bash
+curl -X GET "http://localhost:8983/solr/tech_products/select?q=memory&facet=true&facet.field=manu&fq=price:\[100%20TO%20200\]"
+```
+
+```bash
+curl -X GET "http://localhost:8983/solr/tech_products/select?q=memory&facet=true&facet.field=manu&fq=price:\[100%20TO%20200\]&popularity=7"
 ```
