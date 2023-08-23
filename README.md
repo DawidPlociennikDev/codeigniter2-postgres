@@ -50,10 +50,10 @@ Run PHPStan
   vendor/bin/phpstan analyse -c phpstan.neon
 ```
 
-Run PHPCS
+Run GrumPHP
 
 ```bash
-  phpcs application
+  ./vendor/bin/grumphp run  
 ```
 
 Init GrumPHP before commit
@@ -81,6 +81,15 @@ POST COMMENT
 
 DELETE COMMENT
 [http://localhost:8080/api/delete/{$id}](http://localhost:8080/api/delete/{$id})
+
+
+## PHPUnit
+
+Run tests
+
+```bash
+  vendor/bin/phpunit                                      
+```
 
 ## Apache SOLR
 

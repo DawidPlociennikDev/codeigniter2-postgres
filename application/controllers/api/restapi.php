@@ -87,7 +87,7 @@ class RestApi extends CI_Controller
 			return $this->api_response->error('Record not found', 404);
 		}
 
-		$arrayPatchData = $this->getArrayFromPatchData($patchData);
+		$arrayPatchData = json_decode($patchData, true);
 
 		if ($this->api_model->patchComment($commentId, $arrayPatchData)) {
 			$response = array('message' => 'Resource updated successfully');
@@ -99,12 +99,14 @@ class RestApi extends CI_Controller
 	public function post()
 	{
 		$postData = $this->input->post();
+		
 		if (empty($postData)) {
 			return $this->api_response->error('Data missing', 400);
 		}
 
-		if ($this->api_model->createComment($postData)) {
-			$response = array('message' => 'Resource created successfully');
+		$query = @$this->api_model->createComment($postData);
+		if ($query) {
+			$response = array('message' => 'Resource created successfully', 'id' => $query);
 			return $this->api_response->send($response);
 		}
 		return $this->api_response->error('Something goes wrong', 500);
@@ -127,17 +129,5 @@ class RestApi extends CI_Controller
             echo json_encode(array('message' => 'Unauthorized'));
             exit;
 		}
-	}
-
-	private function getArrayFromPatchData(string $patchData): array
-	{
-		$parameters = explode("&", $patchData);
-		$array = array();
-		foreach ($parameters as $param) {
-			list($key, $value) = explode("=", $param);
-			$array[$key] = $value;
-		}
-
-		return $array;
 	}
 }
