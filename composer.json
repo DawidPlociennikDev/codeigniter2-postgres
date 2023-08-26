@@ -9,5 +9,8 @@
         "allow-plugins": {
             "phpro/grumphp": true
         }
+    },
+    "require": {
+        "solarium/solarium": "^6.3"
     }
 }

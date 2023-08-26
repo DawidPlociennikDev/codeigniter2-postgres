@@ -96,6 +96,12 @@ Run tests
 Install on Ubuntu 22.04
 [https://solr.apache.org/guide/solr/latest/deployment-guide/installing-solr.html](https://solr.apache.org/guide/solr/latest/deployment-guide/installing-solr.html)
 
+Start SOLR
+
+```bash
+  bin/solr start -p 8983
+```
+
 Get documents
 
 ```bash
